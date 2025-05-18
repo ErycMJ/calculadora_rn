@@ -5,14 +5,14 @@ import { Button } from "react-native-paper";
 import { useState, useEffect } from "react";
 
 export default function App() {
-const [resultado, setResultado] = useState("");
+  const [resultado, setResultado] = useState("");
 
-const append = (valor) => {
-    setResultado((prev) => prev + valor);
+  const append = valor => {
+    setResultado(prev => prev + valor);
   };
 
   const remove = () => {
-    setResultado((prev) => prev.slice(0, -1));
+    setResultado(prev => prev.slice(0, -1));
   };
 
   return (
@@ -20,81 +20,175 @@ const append = (valor) => {
       <Text style={styles.fonte}>
         Resultado: {resultado}
       </Text>
-      
-      <View style={styles.row}>
-      <View style={styles.clearAllButton}>
-      <Button mode="contained" style={styles.clearAllButton} onPress={() => setResultado("")}>
-        Clear All
-      </Button>
-      </View>
-
-      <Button mode="contained" style={styles.clearButton} onPress={() => remove()}>
-        ↩
-      </Button>
-      <Button mode="contained" style={styles.operationButton} onPress={() => append("/")}>
-        ÷
-      </Button>
-      </View>
 
       <View style={styles.row}>
-        <Button mode="contained" style={styles.numButton} onPress={() => append("7")}>
+        <View style={styles.clearAllButton}>
+          <Button
+            mode="contained"
+            style={styles.clearAllButton}
+            onPress={() => setResultado("")}
+          >
+            Clear All
+          </Button>
+        </View>
+
+        <Button
+          mode="contained"
+          style={styles.clearButton}
+          onPress={() => remove()}
+        >
+          ↩
+        </Button>
+        <Button
+          mode="contained"
+          style={styles.operationButton}
+          onPress={() => append("÷")}
+        >
+          ÷
+        </Button>
+      </View>
+
+      <View style={styles.row}>
+        <Button
+          mode="contained"
+          style={styles.numButton}
+          onPress={() => append("7")}
+        >
           7
         </Button>
-        <Button mode="contained" style={styles.numButton} onPress={() => append("8")}>
+        <Button
+          mode="contained"
+          style={styles.numButton}
+          onPress={() => append("8")}
+        >
           8
         </Button>
-        <Button mode="contained" style={styles.numButton} onPress={() => append("9")}>
+        <Button
+          mode="contained"
+          style={styles.numButton}
+          onPress={() => append("9")}
+        >
           9
         </Button>
-        <Button mode="contained" style={styles.operationButton} onPress={() => append("x")}>
+        <Button
+          mode="contained"
+          style={styles.operationButton}
+          onPress={() => append("x")}
+        >
           ×
         </Button>
       </View>
 
       <View style={styles.row}>
-        <Button mode="contained" style={styles.numButton} onPress={() => append("6")}>
+        <Button
+          mode="contained"
+          style={styles.numButton}
+          onPress={() => append("6")}
+        >
           6
         </Button>
-        <Button mode="contained" style={styles.numButton} onPress={() => append("5")}>
+        <Button
+          mode="contained"
+          style={styles.numButton}
+          onPress={() => append("5")}
+        >
           5
         </Button>
-        <Button mode="contained" style={styles.numButton} onPress={() => append("4")}>
+        <Button
+          mode="contained"
+          style={styles.numButton}
+          onPress={() => append("4")}
+        >
           4
         </Button>
-        <Button mode="contained" style={styles.operationButton} onPress={() => append("-")}>
+        <Button
+          mode="contained"
+          style={styles.operationButton}
+          onPress={() => append("-")}
+        >
           -
         </Button>
       </View>
 
       <View style={styles.row}>
-        <Button mode="contained" style={styles.numButton} onPress={() => append("3")}>
+        <Button
+          mode="contained"
+          style={styles.numButton}
+          onPress={() => append("3")}
+        >
           3
         </Button>
-        <Button mode="contained" style={styles.numButton} onPress={() => append("2")}>
+        <Button
+          mode="contained"
+          style={styles.numButton}
+          onPress={() => append("2")}
+        >
           2
         </Button>
-        <Button mode="contained" style={styles.numButton} onPress={() => append("1")}>
+        <Button
+          mode="contained"
+          style={styles.numButton}
+          onPress={() => append("1")}
+        >
           1
         </Button>
-        <Button mode="contained" style={styles.operationButton} onPress={() => append("+")}>
+        <Button
+          mode="contained"
+          style={styles.operationButton}
+          onPress={() => append("+")}
+        >
           +
         </Button>
       </View>
       <StatusBar style="auto" />
 
       <View style={styles.row}>
-        <Button mode="contained" style={styles.operationButton} onPress={() => append("+/-")}>
+        <Button
+          mode="contained"
+          style={styles.operationButton}
+          onPress={() => {
+            if(resultado.startsWith("-")){
+              setResultado(resultado.slice(1)); 
+            }else if(resultado.length > 0){
+              setResultado((prev) => "-" + prev);
+            }
+          }}
+        >
           +/-
         </Button>
-        <Button mode="contained" style={styles.numButton} onPress={() => append("0")}>
+        <Button
+          mode="contained"
+          style={styles.numButton}
+          onPress={() => append("0")}
+        >
           0
         </Button>
-        <Button mode="contained" style={styles.operationButton} onPress={() => append(",")}>
+        <Button
+          mode="contained"
+          style={styles.operationButton}
+          onPress={() => append(",")}
+        >
           ,
         </Button>
-      <Button mode="contained" style={styles.equalButton} onPress={() => append("=")}>
-        =
-      </Button>
+        <Button
+          mode="contained"
+          style={styles.equalButton}
+          onPress={() => {
+            try {
+              const expressao = resultado
+                .replace(/x/g, "*")
+                .replace(/÷/g, "/")
+                .replace(/,/g, ".");
+
+              const valorCalculado = eval(expressao);
+              setResultado(String(valorCalculado));
+            } catch (e) {
+              setResultado("Erro");
+            }
+          }}
+        >
+          =
+        </Button>
       </View>
     </View>
   );
