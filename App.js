@@ -5,86 +5,94 @@ import { Button } from "react-native-paper";
 import { useState, useEffect } from "react";
 
 export default function App() {
-  const [count, setCount] = useState(0);
+const [resultado, setResultado] = useState("");
+
+const append = (valor) => {
+    setResultado((prev) => prev + valor);
+  };
+
+  const remove = () => {
+    setResultado((prev) => prev.slice(0, -1));
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.fonte}>
-        Contador: {count}
+        Resultado: {resultado}
       </Text>
       
       <View style={styles.row}>
       <View style={styles.clearAllButton}>
-      <Button mode="contained" onPress={() => setCount(count + 1)}>
+      <Button mode="contained" style={styles.clearAllButton} onPress={() => setResultado("")}>
         Clear All
       </Button>
       </View>
 
-      <Button mode="contained" onPress={() => setCount(0)}>
+      <Button mode="contained" style={styles.clearButton} onPress={() => remove()}>
         ↩
       </Button>
-      <Button mode="contained" onPress={() => setCount(0)}>
+      <Button mode="contained" style={styles.operationButton} onPress={() => append("/")}>
         ÷
       </Button>
       </View>
 
       <View style={styles.row}>
-        <Button mode="contained" onPress={() => setCount(count + 1)}>
+        <Button mode="contained" style={styles.numButton} onPress={() => append("7")}>
           7
         </Button>
-        <Button mode="contained" onPress={() => setCount(count + 1)}>
+        <Button mode="contained" style={styles.numButton} onPress={() => append("8")}>
           8
         </Button>
-        <Button mode="contained" onPress={() => setCount(count + 1)}>
+        <Button mode="contained" style={styles.numButton} onPress={() => append("9")}>
           9
         </Button>
-        <Button mode="contained" onPress={() => setCount(count + 1)}>
+        <Button mode="contained" style={styles.operationButton} onPress={() => append("x")}>
           ×
         </Button>
       </View>
 
       <View style={styles.row}>
-        <Button mode="contained" onPress={() => setCount(count + 1)}>
+        <Button mode="contained" style={styles.numButton} onPress={() => append("6")}>
           6
         </Button>
-        <Button mode="contained" onPress={() => setCount(count + 1)}>
+        <Button mode="contained" style={styles.numButton} onPress={() => append("5")}>
           5
         </Button>
-        <Button mode="contained" onPress={() => setCount(count + 1)}>
+        <Button mode="contained" style={styles.numButton} onPress={() => append("4")}>
           4
         </Button>
-        <Button mode="contained" onPress={() => setCount(count + 1)}>
+        <Button mode="contained" style={styles.operationButton} onPress={() => append("-")}>
           -
         </Button>
       </View>
 
       <View style={styles.row}>
-        <Button mode="contained" onPress={() => setCount(count + 1)}>
+        <Button mode="contained" style={styles.numButton} onPress={() => append("3")}>
           3
         </Button>
-        <Button mode="contained" onPress={() => setCount(count + 1)}>
+        <Button mode="contained" style={styles.numButton} onPress={() => append("2")}>
           2
         </Button>
-        <Button mode="contained" onPress={() => setCount(count + 1)}>
+        <Button mode="contained" style={styles.numButton} onPress={() => append("1")}>
           1
         </Button>
-        <Button mode="contained" onPress={() => setCount(count + 1)}>
+        <Button mode="contained" style={styles.operationButton} onPress={() => append("+")}>
           +
         </Button>
       </View>
       <StatusBar style="auto" />
 
       <View style={styles.row}>
-        <Button mode="contained" onPress={() => setCount(count + 1)}>
+        <Button mode="contained" style={styles.operationButton} onPress={() => append("+/-")}>
           +/-
         </Button>
-        <Button mode="contained" onPress={() => setCount(count + 1)}>
+        <Button mode="contained" style={styles.numButton} onPress={() => append("0")}>
           0
         </Button>
-        <Button mode="contained" onPress={() => setCount(count + 1)}>
+        <Button mode="contained" style={styles.operationButton} onPress={() => append(",")}>
           ,
         </Button>
-      <Button mode="contained" onPress={() => setCount(0)}>
+      <Button mode="contained" style={styles.equalButton} onPress={() => append("=")}>
         =
       </Button>
       </View>
@@ -101,6 +109,7 @@ const styles = StyleSheet.create({
   },
   fonte: {
     fontSize: 24,
+    margin: 20,
     color: "#fff"
   },
   clearAllButton: {
@@ -108,19 +117,19 @@ const styles = StyleSheet.create({
     buttonColor: "#b00020"
   },
   numButton: {
-    margin: 10,
+    margin: 2,
     backgroundColor: "#6200ee"
   },
   operationButton: {
-    margin: 10,
+    margin: 2,
     backgroundColor: "#03dac6"
   },
   clearButton: {
-    margin: 10,
+    margin: 2,
     backgroundColor: "#b00020"
   },
   equalButton: {
-    margin: 10,
+    margin: 2,
     backgroundColor: "#6200ee"
   },
   row: {
