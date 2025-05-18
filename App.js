@@ -1,4 +1,5 @@
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useColorScheme } from 'react-native';
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-paper";
@@ -15,7 +16,13 @@ export default function App() {
     setResultado(prev => prev.slice(0, -1));
   };
 
-  const [temaEscuro, setTemaEscuro] = useState(true);
+  const temaDoSistema = useColorScheme();
+  const [temaEscuro, setTemaEscuro] = useState(temaDoSistema === "dark");
+
+  useEffect(() => {
+    setTemaEscuro(temaDoSistema === "dark");
+  }
+  , [temaDoSistema]);
 
   return (
     <View
@@ -29,7 +36,7 @@ export default function App() {
         style={styles.changeThemeButton}
         onPress={() => setTemaEscuro(prev => !prev)}
       >
-        <Icon name={temaEscuro ? "weather-sunny" : "weather-night"} size={24} color={temaEscuro ? "#fff" : "#000"} />
+        <MaterialCommunityIcons name={temaEscuro ? "weather-sunny" : "weather-night"} size={24} color={temaEscuro ? "#fff" : "#000"} />
       </Button>
 
       <Text style={[styles.fonte, { color: temaEscuro ? "#fff" : "#000" }]}>
