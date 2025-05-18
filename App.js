@@ -1,6 +1,6 @@
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import * as React from "react";
 import { Button } from "react-native-paper";
 import { useState, useEffect } from "react";
 
@@ -15,9 +15,24 @@ export default function App() {
     setResultado(prev => prev.slice(0, -1));
   };
 
+  const [temaEscuro, setTemaEscuro] = useState(true);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.fonte}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: temaEscuro ? "#000" : "#fff" }
+      ]}
+    >
+      <Button
+        mode="contained"
+        style={styles.changeThemeButton}
+        onPress={() => setTemaEscuro(prev => !prev)}
+      >
+        <Icon name={temaEscuro ? "weather-sunny" : "weather-night"} size={24} color={temaEscuro ? "#fff" : "#000"} />
+      </Button>
+
+      <Text style={[styles.fonte, { color: temaEscuro ? "#fff" : "#000" }]}>
         Resultado: {resultado}
       </Text>
 
@@ -147,10 +162,10 @@ export default function App() {
           mode="contained"
           style={styles.operationButton}
           onPress={() => {
-            if(resultado.startsWith("-")){
-              setResultado(resultado.slice(1)); 
-            }else if(resultado.length > 0){
-              setResultado((prev) => "-" + prev);
+            if (resultado.startsWith("-")) {
+              setResultado(resultado.slice(1));
+            } else if (resultado.length > 0) {
+              setResultado(prev => "-" + prev);
             }
           }}
         >
@@ -230,5 +245,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 10
+  },
+  changeThemeButton: {
+    position: "absolute",
+    top: 50,
+    right: 20,
+    backgroundColor: "transparent",
+  },
+  icon: {
+    fontSize: 24
   }
 });
